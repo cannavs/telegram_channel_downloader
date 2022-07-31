@@ -10,15 +10,15 @@ from telethon import TelegramClient, events, errors
 from telethon.tl.types import MessageMediaWebPage
 
 #***********************************************************************************#
-api_id = 1234567   # your telegram api id
-api_hash = '1234567890abcdefgh'  # your telegram api hash
-bot_token = '1234567890:ABCDEFGHIJKLMNOPQRST'  # your bot_token
-admin_id = 1234567890  # your chat id
+api_id =    # your telegram api id
+api_hash = ''  # your telegram api hash
+bot_token = ''  # your bot_token
+admin_id =   # your chat id
 save_path = '/usr/downloads'  # file save path
 upload_file_set = True  # set upload file to google drive
 drive_id = '5FyJClXmsqNw0-Rz19'  # google teamdrive id
 drive_name = 'gc'  # rclone drive name
-max_num = 5  # 同时下载数量
+max_num = 1  # 同时下载数量
 # filter file name/文件名过滤
 filter_list = ['你好，欢迎加入 Quantumu', '\n']
 # filter chat id /过滤某些频道不下载
@@ -99,11 +99,11 @@ async def worker(name):
                 message, os.path.join(file_save_path, file_name)))
             await asyncio.wait_for(task, timeout=3600)
             if upload_file_set:
-                proc = await asyncio.create_subprocess_exec('fclone',
+                proc = await asyncio.create_subprocess_exec('rclone',
                                                             'move',
                                                             os.path.join(
                                                                 file_save_path, file_name),
-                                                            f"{drive_name}:{{{drive_id}}}/{dirname}/{datetime_dir_name}",
+                                                            f"{drive_name}:{{{drive_id}}}/{dirname}",
                                                             '--ignore-existing',
                                                             stdout=asyncio.subprocess.DEVNULL)
                 await proc.wait()
